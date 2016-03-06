@@ -126,7 +126,7 @@ function enable(opts) {
 
     if (options.useCleanCache) {
         originalCache = m._cache;
-        m._cache = {};
+        resetCache(); ////m._cache = {};
     }
 
     originalLoader = m._load;
@@ -160,7 +160,10 @@ function disable() {
  */
 function resetCache() {
     if (options.useCleanCache && originalCache) {
-        m._cache = {};
+        ////m._cache = {};
+        for( var k in m._cache ) // Do not delete native modules.
+            if( !/node$/.test( k ) ) delete m._cache[k];
+
     }
 }
 
